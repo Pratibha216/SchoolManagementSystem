@@ -1,0 +1,169 @@
+Stored Procedures For Insert
+*******************************************
+INSERT LOGIN
+____________
+
+
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+
+ALTER PROCEDURE [sqluser].[usp_InsertSMS_Login_Details]
+@flag bit output,-- return 0 for fail,1 for success
+
+@uName varchar(20),
+@password varchar(6)
+
+AS
+BEGIN
+ BEGIN TRANSACTION 
+ BEGIN TRY 
+Insert into [SMS].[Login]([username],[password1])
+ Values
+(@uName,@password)
+ set @flag=1;
+IF @@TRANCOUNT > 0
+ BEGIN commit TRANSACTION;
+ END
+ END TRY 
+BEGIN CATCH
+IF @@TRANCOUNT > 0
+ BEGIN rollback TRANSACTION;
+ END
+ set @flag=0;
+ END CATCH
+END; 
+
+***************************************************
+INSERT TEACHER
+_______________
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+ALTER PROCEDURE [sqluser].[usp_InsertSMS_TeacherDetails]
+@flag bit output,-- return 0 for fail,1 for success
+@Teacher_Id int,
+@Name varchar(20),
+@Gender char(6),
+@DOB date,
+@Blood_Group char(5),
+@Contact numeric(10,0),
+@Email nvarchar(25),
+@Address varchar(50)
+AS
+BEGIN
+ BEGIN TRANSACTION 
+ BEGIN TRY 
+Insert into SMS.Teacher([Teacher_Id],[Name],[Gender],[DOB],[Blood_Group],[Contact],[Email],[Address])
+ Values
+(@Teacher_Id,@Name,@Gender,@DOB,@Blood_Group,@Contact,@Email,@Address)
+ set @flag=1;
+IF @@TRANCOUNT > 0
+ BEGIN commit TRANSACTION;
+ END
+ END TRY 
+BEGIN CATCH
+IF @@TRANCOUNT > 0
+ BEGIN rollback TRANSACTION;
+ END
+ set @flag=0;
+ END CATCH
+END 
+***********************************************
+INSERT STUDENT
+_______________
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+ALTER PROCEDURE [sqluser].[usp_InsertSMS_StudentDetails]
+@flag bit output,-- return 0 for fail,1 for success
+@Student_Id int,
+@Student_Name varchar(25),
+@Gender char(6),
+@DOB date,
+@Blood_Group char(5),
+@Contact numeric(10,0),
+@Address varchar(50),
+@Grade_Id int
+AS
+BEGIN
+ BEGIN TRANSACTION 
+ BEGIN TRY 
+Insert into 
+SMS.Student([Student_Id],[Student_Name],[Gender],[DOB],[Blood_Group],[Contact],[Address],[Grade_Id])
+Values(@Student_Id,@Student_Name,@Gender,@DOB,@Blood_Group,@Contact,@Address,@Grade_Id)
+ set @flag=1;
+IF @@TRANCOUNT > 0
+ BEGIN commit TRANSACTION;
+ END
+ END TRY 
+BEGIN CATCH
+IF @@TRANCOUNT > 0
+ BEGIN rollback TRANSACTION;
+ END
+ set @flag=0;
+ END CATCH
+ END 
+***********************************************
+INSERT GRADE
+______________
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+ALTER PROCEDURE [sqluser].[usp_InsertSMS_GradeDetails]
+@flag bit output,-- return 0 for fail,1 for success
+@Grade_Id int,
+@Grade_Name char(5),
+@Description varchar(40)
+AS
+BEGIN
+ BEGIN TRANSACTION 
+ BEGIN TRY 
+Insert into SMS.Grade([Grade_Id],[Grade_Name],[Description]) Values(@Grade_Id,@Grade_Name,@Description)
+ set @flag=1;
+IF @@TRANCOUNT > 0
+ BEGIN commit TRANSACTION;
+ END
+ END TRY 
+BEGIN CATCH
+IF @@TRANCOUNT > 0
+ BEGIN rollback TRANSACTION;
+ END
+ set @flag=0;
+ END CATCH
+END 
+************************************************
+INSERT ATTENDANCE
+_________________
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+ALTER PROCEDURE [sqluser].[usp_InsertSMS_AttendenceDetails]
+@flag bit output,-- return 0 for fail,1 for success
+@Attendence_Id int,
+@Student_id int,
+@Date date,
+@Attended char(5)
+AS
+BEGIN
+ BEGIN TRANSACTION 
+ BEGIN TRY 
+Insert into SMS.Attendence([Attendence_Id],[Student_id],[Date],[Attended]) Values(@Attendence_Id,@Student_id,@Date,@Attended)
+ set @flag=1;
+IF @@TRANCOUNT > 0
+ BEGIN commit TRANSACTION;
+ END
+ END TRY 
+BEGIN CATCH
+IF @@TRANCOUNT > 0
+ BEGIN rollback TRANSACTION;
+ END
+ set @flag=0;
+ END CATCH
+END 
+****************************************************

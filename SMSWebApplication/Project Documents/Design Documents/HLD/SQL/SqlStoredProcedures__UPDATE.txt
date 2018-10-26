@@ -1,0 +1,158 @@
+Stored Procedures for update
+********************************************
+UPDATE LOGIN
+_____________
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+ALTER PROCEDURE [SMS].[usp_UpdateSMS0_Login_Details]
+
+ @uName varchar(20),
+ @password varchar(20),
+ @role varchar(20)
+ 
+ AS
+
+	 Update SMS.Users set User_Name = @uName, Password=@password
+	 Where Role=@role 
+************************************************
+UPDATE TEACHER DETAILS
+______________________
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+ ALTER PROCEDURE [sqluser].[usp_UpdateSMS_TeacherDetails]
+ @flag bit output,-- return 0 for fail,1 for success
+ @Teacher_Id int,
+ @Name varchar(25),
+ @Gender char(6),
+ @DOB date,
+ @Blood_Group char(5),
+ @Contact int,
+ @Email nvarchar(25),
+ @Address varchar(50)
+ AS
+ BEGIN
+  BEGIN TRANSACTION 
+   BEGIN TRY
+	 Update SMS_Teacher set Gender = @Gender, Address=@Address
+	 Where Teacher_Id = @Teacher_Id 
+	 set @flag=1; 
+	 IF @@TRANCOUNT > 0
+	 	 BEGIN commit TRANSACTION;
+		 END
+	END TRY
+	BEGIN CATCH
+		IF @@TRANCOUNT > 0
+		BEGIN rollback TRANSACTION; 
+		END
+		set @flag=0;
+	END CATCH
+END 
+*******************************************************
+UPDATE STUDENT DETAILS
+______________________
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+ ALTER PROCEDURE [sqluser].[usp_UpdateSMS_StudentDetails]
+ @flag bit output,-- return 0 for fail,1 for success
+ @Student_Id int,
+ @Student_Name varchar(25),
+ @Gender char(6),
+ @DOB date,
+ @Blood_Group char(5),
+ @Contact numeric(10,0),
+ @Address varchar(50),
+ @Grade_Id int
+ AS
+ BEGIN
+  BEGIN TRANSACTION 
+   BEGIN TRY
+	 Update SMS.Student 
+	 set[Student_Id] = @Student_Id,
+		[Student_Name] =@Student_Name,
+		[Gender]=@Gender,
+		[DOB]=@DOB,
+		[Blood_Group]=@Blood_Group,
+		[Contact]=@Contact,
+		[Address]=@Address,
+		[Grade_Id] = @Grade_Id
+	Where [Student_Id]=@Student_Id 
+	 set @flag=1; 
+	 IF @@TRANCOUNT > 0
+	 	 BEGIN commit TRANSACTION;
+		 END
+	END TRY
+	BEGIN CATCH
+		IF @@TRANCOUNT > 0
+		BEGIN rollback TRANSACTION; 
+		END
+		set @flag=0;
+	END CATCH
+END 
+***********************************************
+UPDATE GRADE DETAILS
+____________________
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+ALTER PROCEDURE [sqluser].[usp_UpdateSMS_GradeDetails]
+@flag bit output,-- return 0 for fail,1 for success
+@Grade_Id int,
+@Grade_Name char(5),
+@Description varchar(40)
+ AS
+ BEGIN
+  BEGIN TRANSACTION 
+   BEGIN TRY
+	 Update SMS.Grade set [Grade_Name]=@Grade_Name, [Description]=@Description
+	 Where  [Grade_Id]=@Grade_Id
+	 set @flag=1; 
+	 IF @@TRANCOUNT > 0
+	 	 BEGIN commit TRANSACTION;
+		 END
+	END TRY
+	BEGIN CATCH
+		IF @@TRANCOUNT > 0
+		BEGIN rollback TRANSACTION; 
+		END
+		set @flag=0;
+	END CATCH
+END 
+**********************************************
+UPDATE ATTENDANCE DETAILS
+_________________________
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+ ALTER PROCEDURE [sqluser].[usp_UpdateSMS_AttendenceDetails]
+ @flag bit output,-- return 0 for fail,1 for success
+@Attendence_Id int,
+@Student_id int,
+@Date date,
+@Attended char(5)
+ AS
+ BEGIN
+  BEGIN TRANSACTION 
+   BEGIN TRY
+	 Update SMS.Attendence set Date=@Date, Attended=@Attended
+	 Where Attendence_Id=@Attendence_Id 
+	 set @flag=1; 
+	 IF @@TRANCOUNT > 0
+	 	 BEGIN commit TRANSACTION;
+		 END
+	END TRY
+	BEGIN CATCH
+		IF @@TRANCOUNT > 0
+		BEGIN rollback TRANSACTION; 
+		END
+		set @flag=0;
+	END CATCH
+END
+*******************************************************

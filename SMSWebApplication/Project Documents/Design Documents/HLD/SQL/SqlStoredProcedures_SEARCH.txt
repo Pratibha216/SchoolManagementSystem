@@ -1,0 +1,75 @@
+Stored Procedures for Search
+******************************************
+Search Teacher By Id
+____________________
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+ALTER PROCEDURE [sqluser].[usp_FetchByIDSMS_TeacherDetails]
+@flag bit output,-- return 0 for fail,1 for success
+@Teacher_Id int
+AS
+BEGIN
+ BEGIN TRANSACTION 
+ BEGIN TRY
+   Select * From SMS.Teacher Where [Teacher_Id]=@Teacher_Id set @flag=1; 
+   IF @@TRANCOUNT > 0
+   BEGIN commit TRANSACTION;
+   END
+END TRY
+BEGIN CATCH
+   IF @@TRANCOUNT > 0
+    BEGIN rollback TRANSACTION; 
+  END
+  set @flag=0; 
+END CATCH 
+END
+*********************************************
+Search Student By Id
+_____________________
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+ALTER PROCEDURE [sqluser].[usp_FetchByIDSMS_StudnetDetails]
+@flag bit output,-- return 0 for fail,1 for success
+@StudentId int
+AS
+BEGIN
+ BEGIN TRANSACTION 
+ BEGIN TRY
+   Select * From SMS.Student Where [Student_Id]=@StudentId set @flag=1; 
+   IF @@TRANCOUNT > 0
+   BEGIN commit TRANSACTION;
+   END
+END TRY
+BEGIN CATCH
+   IF @@TRANCOUNT > 0
+    BEGIN rollback TRANSACTION; 
+  END
+  set @flag=0; 
+END CATCH 
+END 
+
+**************************************************
+Search Grade
+____________
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+ALTER PROCEDURE [sqluser].[usp_FetchSMS_GradeDetails]
+As
+Select * from SMS.Grade ORDER By  [Grade_Id]
+
+*************************************************
+Search Attendance
+_________________
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+ALTER PROCEDURE [sqluser].[usp_FetchSMS_AttendenceDetails]
+As
+Select * from SMS.Attendence ORDER By Attendence_Id 

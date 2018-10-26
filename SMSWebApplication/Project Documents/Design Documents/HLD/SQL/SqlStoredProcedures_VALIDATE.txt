@@ -1,0 +1,16 @@
+Stored Procedure to Validate login
+************************************
+
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+ALTER PROCEDURE [SMS].[usp_ValidateSMS0_Login_Details]
+
+@uName varchar(20),
+@password varchar,
+@role varchar(20)
+
+AS
+ Select * from SMS.users where User_Name = @uName
+ and Password = @password and Role=@role

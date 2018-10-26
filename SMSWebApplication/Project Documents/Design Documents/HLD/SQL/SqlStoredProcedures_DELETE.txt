@@ -1,0 +1,107 @@
+Stored Procedures For Delete
+**********************************
+DELETE TEACHER
+______________
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+ALTER PROCEDURE [sqluser].[usp_DeleteSMS_TeacherDetails]
+@flag bit output,-- return 0 for fail,1 for success
+@Teacher_Id int
+AS
+BEGIN
+ BEGIN TRANSACTION 
+ BEGIN TRY
+   Delete from SMS.Teacher Where Teacher_Id= @Teacher_Id set @flag=1; 
+   IF @@TRANCOUNT > 0
+   BEGIN commit TRANSACTION;
+   END
+END TRY
+BEGIN CATCH
+   IF @@TRANCOUNT > 0
+    BEGIN rollback TRANSACTION; 
+  END
+  set @flag=0; 
+END CATCH 
+END 
+***********************************************
+DELETE STUDENT
+______________
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+ALTER PROCEDURE [sqluser].[usp_DeleteSMS_StudentDetails]
+@flag bit output,-- return 0 for fail,1 for success
+@StudentId int
+AS
+BEGIN
+ BEGIN TRANSACTION 
+ BEGIN TRY
+   Delete from SMS.Student Where [Student_Id]=@StudentId set @flag=1; 
+   IF @@TRANCOUNT > 0
+   BEGIN commit TRANSACTION;
+   END
+END TRY
+BEGIN CATCH
+   IF @@TRANCOUNT > 0
+    BEGIN rollback TRANSACTION; 
+  END
+  set @flag=0; 
+END CATCH 
+END 
+
+*********************************************
+DELETE GRADE
+____________
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+ALTER PROCEDURE [sqluser].[usp_DeleteSMS_GradeDetails]
+@flag bit output,-- return 0 for fail,1 for success
+@Grade_Id int
+AS
+BEGIN
+ BEGIN TRANSACTION 
+ BEGIN TRY
+   Delete from SMS.Grade Where [Grade_Id]=@Grade_Id set @flag=1; 
+   IF @@TRANCOUNT > 0
+   BEGIN commit TRANSACTION;
+   END
+END TRY
+BEGIN CATCH
+   IF @@TRANCOUNT > 0
+    BEGIN rollback TRANSACTION; 
+  END
+  set @flag=0; 
+END CATCH 
+END 
+*********************************************
+DELETE ATTENDANCE
+_________________
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+ALTER PROCEDURE [sqluser].[usp_DeleteSMS_AttendenceDetails]
+@flag bit output,-- return 0 for fail,1 for success
+@Attendence_Id int
+AS
+BEGIN
+ BEGIN TRANSACTION 
+ BEGIN TRY
+   Delete from SMS.Attendence Where Attendence_Id=@Attendence_Id set @flag=1; 
+   IF @@TRANCOUNT > 0
+   BEGIN commit TRANSACTION;
+   END
+END TRY
+BEGIN CATCH
+   IF @@TRANCOUNT > 0
+    BEGIN rollback TRANSACTION; 
+  END
+  set @flag=0; 
+END CATCH 
+END 
+**********************************************
