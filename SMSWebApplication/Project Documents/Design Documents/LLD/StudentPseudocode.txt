@@ -1,0 +1,62 @@
+1.  ACTION FLOW / PROGRAM SPECIFICATION / PSEUDOCODE
+1.1 ACTION  : REGISTER ( )
+Description: 
+Display all the required field that need to be entered by the user.
+Process: 
+   
+BEGIN
+Try
+{
+    Student_Id = Check whether input Student_Id= is unique.
+    Student_Name = Check whether input Student_Name is a valid value and field is not empty.
+    Gender = Check whether input Gender is in correct format and field is not empty.
+    DOB = Check whether input DOB is a valid value and field is not empty.
+    Blood_Group = Check whether input Blood_Group is in correct format and the field is not empty.
+    Contact = Check whether input Contact field is not empty.
+    Address = Check whether input Address field is not empty.
+
+   If (all check results == true)
+ {
+    Generate SQL insert queries
+    Connect to database              
+    Pass queries to database  
+    if (any query fails) 
+        display error message
+    else display registration complete message
+    endif 
+   }
+else  
+ {
+   
+    If (Student_Name == false) 
+        display “Enter valid Student Name”;
+    endif   if Gender == false)
+        display “ Select Gender 
+    endif 
+if (DOB == false) 
+        display “Enter the correct date of birth";
+    endif 
+    if (Blood_Group  == false) 
+        display “Select a valid Blood Group";
+    endif 
+    if (Contact  == false) 
+        display “Retype a valid 10 digit mobile number";
+             endif 
+    if (Address == false) 
+        display “Enter a valid Delivery Address";
+    endif 
+   }
+    endif 
+}
+endif 
+}
+catch(SqlException ex)
+{
+If (Ex.Number == Student_Id)
+Display Student_Id already exists.... provide another id";
+}
+catch(Exception ex)
+{
+Display "Something went wrong. Please try again";
+}
+END 
